@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Programming Joke</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="center-container">
+    <h1>🤣Programming Jokes🤣😂</h1>
+    <!-- Add a <p> element with the ID "joke" where you want to display the joke -->
+    <p id="joke"></p>
+    <p id="punchline"></p>
+    <button id="generate">generate</button>
+
+    <!-- Include your JavaScript code -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var joke = document.getElementById("joke");
+        var punchline = document.getElementById("punchline");
+        var generate = document.getElementById("generate");
+        var apiUrl = "https://official-joke-api.appspot.com/jokes/programming/random";
+
+        generate.addEventListener("click",function(){
+            apicall(joke,punchline);
+        });
+
+        function apicall(jokeElement,punchElement){
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              jokeElement.textContent = data[0].setup;
+              punchElement.textContent = data[0].punchline;
+
+            } else {
+              jokeElement.textContent = "No jokes available.";
+            }
+          })
+          .catch((error) => {
+            jokeElement.textContent = "Failed to fetch a joke.";
+            console.error(error);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
